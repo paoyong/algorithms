@@ -1,4 +1,6 @@
 import unittest
+import sys
+import io
 from random import randint
 
 class Tree:
@@ -30,8 +32,8 @@ def insert_tree(t, x, parent=None):
 def traverse_tree(t):
     if t != None:
         traverse_tree(t.left)
+        print(t.data, end=" ")
         traverse_tree(t.right)
-        print(t.data)
 
 # Tests
 class TestTree(unittest.TestCase):
@@ -94,9 +96,11 @@ class TestTree(unittest.TestCase):
         insert_tree(root, 12)
         insert_tree(root, 17)
         insert_tree(root, 11)
+        capturedOutput = io.StringIO()
+        sys.stdout = capturedOutput
         traverse_tree(root)
-        self.assertEqual(1, 1)
-
+        sys.stdout = sys.__stdout__
+        self.assertEqual(capturedOutput.getvalue(), '-8 2 7 10 11 12 17 ')
 
 if __name__ == '__main__':
     unittest.main()
