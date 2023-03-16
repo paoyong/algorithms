@@ -7,12 +7,23 @@ class List:
 
     # Push onto the end of the Linked List
     def push(self, x):
-
         # Traverse until the end
         curr = self
         while curr.next != None:
             curr = curr.next
         curr.next = List(x)
+    
+    # Given data value x, traverse the linked list until found x or return None
+    def search(self, x):
+        curr = self
+
+        if curr.data is x:
+            return curr
+
+        while curr.next != None:
+            curr = curr.next
+            if curr.data is x:
+                return curr
 
 def search_list(l, x):
     if l.data is x:
@@ -47,13 +58,22 @@ class DictionaryHashLL:
         else:
             self.table[h].push(x)
 
+    # Given a data x, return a List if exists. O(n+m)
+    def search(self, x):
+        for l in self.table:
+            if l != None:
+                ll_search_result = l.search(x)
+                if ll_search_result != None:
+                    return ll_search_result
+        return None
+
 
     # Print our hash table fully
     def print_table(self):
         index = 0
         for l in self.table:
-            print(index, end=" ")
             if l != None:
+                print(index, end=" ")
                 print(l.data, end="")
 
                 # Traverse through our linked list
@@ -62,19 +82,21 @@ class DictionaryHashLL:
                     print(", ", end="")
                     curr = curr.next
                     print(curr.data, end="")
-            print(" ")
+                print(" ")
             index += 1
-
 
 l3 = List("Joe")
 l2 = List("John", l3)
 l1 = List("Emma", l2)
 
-d = DictionaryHashLL(10)
+d = DictionaryHashLL(100000)
 d.insert('Pao')
 d.insert('Sally')
 d.insert('John')
 d.insert('Mister')
 d.insert('Jesse')
 d.insert('Felix')
+d.insert('Sam')
+d.insert('Adept')
 d.print_table()
+print(d.search('Adept').data)
