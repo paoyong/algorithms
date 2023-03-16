@@ -54,9 +54,10 @@ class DictionaryHashLL:
         # If hashed into empty spot in array, initialize Linked List
         if self.table[h] is None:
             self.table[h] = List(x, None)
-        # Otherwise add onto existing Linked List
+        # Otherwise add onto existing Linked List at the front
         else:
-            self.table[h].push(x)
+            l_new = List(x, self.table[h])
+            self.table[h] = l_new
 
     # Given a data x, return a List if exists. O(n+m)
     def search(self, x):
@@ -66,7 +67,6 @@ class DictionaryHashLL:
                 if ll_search_result != None:
                     return ll_search_result
         return None
-
 
     # Print our hash table fully
     def print_table(self):
@@ -89,7 +89,7 @@ l3 = List("Joe")
 l2 = List("John", l3)
 l1 = List("Emma", l2)
 
-d = DictionaryHashLL(100000)
+d = DictionaryHashLL(10)
 d.insert('Pao')
 d.insert('Sally')
 d.insert('John')
