@@ -10,6 +10,16 @@ class Tree:
         self.left = left
         self.right = right
 
+def search_tree(t, x):
+    if t.data is x:
+        return t
+
+    if t != None:
+        return search_tree(t.left)
+        return search_tree(t.right)
+    
+    return 0
+    
 def find_minimum(t):
     if t.left is None:
         return t.data
@@ -101,6 +111,15 @@ class TestTree(unittest.TestCase):
         traverse_tree(root)
         sys.stdout = sys.__stdout__
         self.assertEqual(capturedOutput.getvalue(), '-8 2 7 10 11 12 17 ')
+
+    def test_search_tree_found(self):
+        root = Tree(5)
+        insert_tree(root, 15)
+        insert_tree(root, -9)
+        insert_tree(root, -10)
+        insert_tree(root, -9)
+        self.assertEqual(search_tree(root, 15).data, 15)
+
 
 if __name__ == '__main__':
     unittest.main()
