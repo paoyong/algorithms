@@ -8,6 +8,12 @@ class Tree:
         self.left = left
         self.right = right
 
+def find_minimum(t):
+    if t.left is None:
+        return t.data
+    else:
+        return find_minimum(t.left)
+
 def insert_tree(t, x, parent=None):
     if t is None:
         if x < parent.data:
@@ -51,12 +57,28 @@ class TestTree(unittest.TestCase):
         insert_tree(root, 2)
         insert_tree(root, -8)
         insert_tree(root, -9)
-        insert_tree(root, 7)
-        insert_tree(root, 12)
-        insert_tree(root, 17)
         insert_tree(root, 11)
         self.assertEqual(find_minimum(root), -9)
 
+    def test_find_minimum_root_is_minimum(self):
+        root = Tree(-15)
+        insert_tree(root, 2)
+        insert_tree(root, -8)
+        insert_tree(root, -9)
+        insert_tree(root, 11)
+        self.assertEqual(find_minimum(root), -15)
+
+    def test_find_minimum_one_node(self):
+        root = Tree(-15)
+        self.assertEqual(find_minimum(root), -15)
+
+    def test_find_minimum_right_middle_node(self):
+        root = Tree(5)
+        insert_tree(root, -9)
+        insert_tree(root, -9)
+        insert_tree(root, -10)
+        insert_tree(root, -9)
+        self.assertEqual(find_minimum(root), -10)
 
 
 if __name__ == '__main__':
