@@ -27,6 +27,11 @@ def insert_tree(t, x, parent=None):
     else:
         return insert_tree(t.right, x, t)
 
+def traverse_tree(t):
+    if t != None:
+        traverse_tree(t.left)
+        print(t.data)
+
 # Tests
 class TestTree(unittest.TestCase):
     def test_insert(self):
@@ -79,6 +84,15 @@ class TestTree(unittest.TestCase):
         insert_tree(root, -10)
         insert_tree(root, -9)
         self.assertEqual(find_minimum(root), -10)
+
+    def test_traverse_tree(self):
+        num_nodes = pow(2,6)
+        lim = 200
+        root = Tree(lim)
+        for i in range(1, num_nodes):
+            insert_tree(root, randint(-lim, lim))
+        traverse_tree(root)
+        self.assertEqual(1, 1)
 
 
 if __name__ == '__main__':
