@@ -46,6 +46,18 @@ class TestTree(unittest.TestCase):
             insert_tree(root, randint(-lim, lim))
         self.assertEqual(1, 1)
 
+    def test_find_minimum(self):
+        root = Tree(10)
+        insert_tree(root, 2)
+        insert_tree(root, -8)
+        insert_tree(root, -9)
+        insert_tree(root, 7)
+        insert_tree(root, 12)
+        insert_tree(root, 17)
+        insert_tree(root, 11)
+        self.assertEqual(find_minimum(root), -9)
+
+
 
 if __name__ == '__main__':
     unittest.main()
