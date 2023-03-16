@@ -68,6 +68,24 @@ class DictionaryHashLL:
                     return ll_search_result
         return None
 
+    def delete(self, delete_this):
+        # Traverse to find predecessor of delete_this
+        index = 0
+        for l in self.table:
+            index += 1
+            if l != None:
+                curr = l
+                if curr is delete_this:
+                    self.table[index] = delete_this.next
+                    return 1
+                while curr.next != None:
+                    if curr.next is delete_this:
+                        curr.next = delete_this.next
+                        return 1
+                    curr = curr.next
+        return 0
+
+
     # Print our hash table fully
     def print_table(self):
         index = 0
@@ -99,4 +117,7 @@ d.insert('Felix')
 d.insert('Sam')
 d.insert('Adept')
 d.print_table()
-print(d.search('Adept').data)
+d.delete(d.search('Adept'))
+d.delete(d.search('Felix'))
+print('-------------')
+d.print_table()
