@@ -15,23 +15,48 @@ def search_list(l, x):
 
 # Dictionary implementation using hash function and linked list for collisions
 class DictionaryHashLL:
-    def __init__(self, size):
-        self.length = size
+    def __init__(self, length):
+        self.length = length
+        self.table = [None] * length
 
-# Hash function
-def hash(x):
-    return (2 * x + 1) % 10
+    # Hash function
+    def _hash(self, s):
+        sum = 0
+        for c in s:
+            sum += ord(c) * 52
 
-def main(argv):
-    print(hash(int(argv[0])))
+        return (2 * sum + 1) % self.length
 
-    l3 = List("Joe")
-    l2 = List("John", l3)
-    l1 = List("Emma", l2)
+    # Given data x, insert into the hash dictionary
+    def insert(self, x):
+        h = self._hash(x)
+        if self.table[h] is None:
+            self.table[h] = List(x, None)
 
-    print(search_list(l1, "John").data)
+    # Print our hash table fully
+    def print_table(self):
+        index = 0
+        for l in self.table:
+            print(index, end=" ")
+            if l != None:
+                print(l.data, end=" ")
+                curr = l
+                while curr.next != None:
+                    print(l.next.data, end=", ")
+                    curr = curr.next
+            print(" ")
+            index += 1
 
 
-if __name__ == "__main__":
-   main(sys.argv[1:])
+l3 = List("Joe")
+l2 = List("John", l3)
+l1 = List("Emma", l2)
 
+d = DictionaryHashLL(10)
+d.insert('Pao')
+d.insert('Sally')
+d.insert('John')
+d.insert('Mister')
+d.insert('Jesse')
+d.insert('Felix')
+d.print_table()
