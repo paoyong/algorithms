@@ -5,6 +5,15 @@ class List:
         self.data = data;
         self.next = next;
 
+    # Push onto the end of the Linked List
+    def push(self, x):
+
+        # Traverse until the end
+        curr = self
+        while curr.next != None:
+            curr = curr.next
+        curr.next = List(x)
+
 def search_list(l, x):
     if l.data is x:
         return l
@@ -30,8 +39,14 @@ class DictionaryHashLL:
     # Given data x, insert into the hash dictionary
     def insert(self, x):
         h = self._hash(x)
+        
+        # If hashed into empty spot in array, initialize Linked List
         if self.table[h] is None:
             self.table[h] = List(x, None)
+        # Otherwise add onto existing Linked List
+        else:
+            self.table[h].push(x)
+
 
     # Print our hash table fully
     def print_table(self):
@@ -39,11 +54,14 @@ class DictionaryHashLL:
         for l in self.table:
             print(index, end=" ")
             if l != None:
-                print(l.data, end=" ")
+                print(l.data, end="")
+
+                # Traverse through our linked list
                 curr = l
                 while curr.next != None:
-                    print(l.next.data, end=", ")
+                    print(", ", end="")
                     curr = curr.next
+                    print(curr.data, end="")
             print(" ")
             index += 1
 
