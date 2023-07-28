@@ -1,2 +1,2 @@
-# ctci
+# Algorithms
 Algorithms practice
