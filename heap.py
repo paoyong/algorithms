@@ -48,9 +48,8 @@ class PriorityQueue:
             print(self.q[i], end=" ")
         print("\nelements:", self.n)
 
-    # Given the index for the array, bubble up that element satisfying min_heap
-    # dominance
-    def min_heap_bubble_up(self, i):
+    # Given the index for the array, bubble up that element satisfying heap dominance
+    def bubble_up(self, i):
         print("bubbling up ", self.q[i])
         p = self.parent(i)
         print("p = ", p)
@@ -58,9 +57,10 @@ class PriorityQueue:
             print("No parent, bubble up done")
             return 0
 
+        # Swap the > sign for min/max heap
         if self.q[i] < self.q[p]:
             self.swap(i, p)
-            self.min_heap_bubble_up(p)
+            self.bubble_up(p)
 
     # Heap Construction - bubble up on insert
     def insert(self, x):
@@ -68,7 +68,7 @@ class PriorityQueue:
         self.q[self.n] = x
 
         # Bubble up this new element
-        self.min_heap_bubble_up(self.n)
+        self.bubble_up(self.n)
 
         # Increase number of elements of our priority queue by 1
         self.n = self.n + 1
