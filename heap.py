@@ -48,19 +48,32 @@ class PriorityQueue:
             print(self.q[i], end=" ")
         print("\nelements:", self.n)
 
-    # Given the index for the array, bubble up that element satisfying heap dominance
+    # Given the index for the element in the array, bubble up that element satisfying heap dominance
     def bubble_up(self, i):
-        print("bubbling up ", self.q[i])
         p = self.parent(i)
-        print("p = ", p)
         if p is None:
-            print("No parent, bubble up done")
             return 0
 
         # Swap the > sign for min/max heap
         if self.q[i] < self.q[p]:
             self.swap(i, p)
             self.bubble_up(p)
+
+    # Given the index for an element in the array, find min of two children and potentially swap with
+    # parent to reestablish dominance
+    def bubble_down(self, i):
+        p = self.parent(i)
+        if p is None:
+            return 0
+
+        # Iterate over the two children
+        for c in range (0, 1):
+            if self.q[i - c - 1] < self.q[p]:
+                self.swap(i - c - 1, p)
+
+        # Recurse on the parent node to check that as well.
+        # TODO
+        self.bubble_down(p)
 
     # Heap Construction - bubble up on insert
     def insert(self, x):
@@ -73,11 +86,18 @@ class PriorityQueue:
         # Increase number of elements of our priority queue by 1
         self.n = self.n + 1
 
-        print("element", x, "inserted here is new tree:")
-        self.print_tree()
+    def extract_min(self):
+        min_value = self.q[0]
+        self.q[0] = self.q[self.n - 1]
+        self.q[self.n - 1] = None
+        self.bubble_down(self.n - 1)
+        return min_value
+        
 
-size = 100
+size = 10
 p = PriorityQueue(size)
 for i in range(0, size):
-    p.insert(random.randint(1, 1000))
+    p.insert(random.randint(1, 20))
+p.print_tree()
+print(p.extract_min())
 p.print_tree()
