@@ -68,11 +68,10 @@ class PriorityQueue:
 
         # Iterate over the two children
         for c in range (0, 1):
-            if self.q[i - c - 1] < self.q[p]:
-                self.swap(i - c - 1, p)
+            if self.q[i - c] < self.q[p]:
+                self.swap(i - c, p)
 
         # Recurse on the parent node to check that as well.
-        # TODO
         self.bubble_down(p)
 
     # Heap Construction - bubble up on insert
@@ -88,16 +87,33 @@ class PriorityQueue:
 
     def extract_min(self):
         min_value = self.q[0]
+
+        # Move last element to first element
         self.q[0] = self.q[self.n - 1]
         self.q[self.n - 1] = None
+
+        # Working with one less element now
+        self.n = self.n - 1
+
+        # Bubble down starting with last element index (-1 because array starts
+        # at 0)
         self.bubble_down(self.n - 1)
         return min_value
         
 
+# Sample tree to bubble down with
 size = 10
 p = PriorityQueue(size)
-for i in range(0, size):
-    p.insert(random.randint(1, 20))
+p.q[0] = 8
+p.q[1] = 4
+p.q[2] = 6
+p.q[3] = 9
+p.q[4] = 1
+p.q[5] = 2
+p.q[6] = 5
+p.q[7] = 2
+p.q[8] = 1
+p.n = 9
 p.print_tree()
-print(p.extract_min())
+print("extracted min:", p.extract_min())
 p.print_tree()
