@@ -12,15 +12,18 @@ class PriorityQueue:
     def parent(self, n):
         if (n == 0):
             return None
-        
+
         return math.floor(n/2);
 
     # Return the queue (self.q) index of the left child node
-    def young_child(self, n):
-        if (n > self.n):
-            return None
+    def young_child(self, i):
+        # Case of where index 0 is given so it doesnt multiply by 0
+        i = i + 1
+        
+        #if (i > self.n):
+        #    return None
 
-        return self.q[2 * n]
+        return (2 * i) - 1
 
     # Given two indices for the queue, swap the elements of the two in the
     # array
@@ -46,7 +49,7 @@ class PriorityQueue:
                     print(' ', end="")
 
             print(self.q[i], end=" ")
-        print("\nelements:", self.n)
+        print()
 
     # Given the index for the element in the array, bubble up that element satisfying heap dominance
     def bubble_up(self, i):
@@ -59,20 +62,20 @@ class PriorityQueue:
             self.swap(i, p)
             self.bubble_up(p)
 
-    # Given the index for an element in the array, find min of two children and potentially swap with
-    # parent to reestablish dominance
     def bubble_down(self, i):
-        p = self.parent(i)
-        if p is None:
-            return 0
+        min_index = i
 
-        # Iterate over the two children
-        for c in range (0, 1):
-            if self.q[i - c] < self.q[p]:
-                self.swap(i - c, p)
+        # Child index
+        c = self.young_child(i)
 
-        # Recurse on the parent node to check that as well.
-        self.bubble_down(p)
+        for j in range (0, 2):
+            if (c + j) < self.n:
+                if self.q[c + j] < self.q[min_index]:
+                    min_index = c + j
+
+        if min_index is not i:
+            self.swap(min_index, i)
+            self.bubble_down(min_index)
 
     # Heap Construction - bubble up on insert
     def insert(self, x):
@@ -95,25 +98,16 @@ class PriorityQueue:
         # Working with one less element now
         self.n = self.n - 1
 
-        # Bubble down starting with last element index (-1 because array starts
-        # at 0)
-        self.bubble_down(self.n - 1)
+        # Bubble down starting from root
+        self.bubble_down(0)
         return min_value
         
 
 # Sample tree to bubble down with
-size = 10
+size = 20000
 p = PriorityQueue(size)
-p.q[0] = 8
-p.q[1] = 4
-p.q[2] = 6
-p.q[3] = 9
-p.q[4] = 1
-p.q[5] = 2
-p.q[6] = 5
-p.q[7] = 2
-p.q[8] = 1
-p.n = 9
+for i in range(0, size):
+    p.insert(random.randint(1, 100))
 p.print_tree()
-print("extracted min:", p.extract_min())
-p.print_tree()
+for i in range(0, size):
+    print(p.extract_min())
