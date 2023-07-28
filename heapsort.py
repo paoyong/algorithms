@@ -1,7 +1,7 @@
 import math
 import random
 
-class PriorityQueue:
+class MinHeap:
     def __init__(self, array_size):
         self.q = [None] * array_size
 
@@ -61,7 +61,7 @@ class PriorityQueue:
         if self.q[i] < self.q[p]:
             self.swap(i, p)
             self.bubble_up(p)
-
+    # Given the index for an element, fix the dominance and recurse on the min element until going past n
     def bubble_down(self, i):
         min_index = i
 
@@ -105,7 +105,7 @@ class PriorityQueue:
 
 # Sample tree to bubble down with
 size = 20000
-p = PriorityQueue(size)
+p = MinHeap(size)
 for i in range(0, size):
     p.insert(random.randint(1, 100))
 p.print_tree()
