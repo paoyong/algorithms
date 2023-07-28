@@ -1,16 +1,19 @@
 import math
+import random
 
 class PriorityQueue:
-    def __init__(self, n):
-        self.q = [None] * n
-        self.n = n
+    def __init__(self, array_size):
+        self.q = [None] * array_size
+
+        # Number of elements
+        self.n = 0
 
     # Return the queue (self.q) index of the parent node
     def parent(self, n):
-        if (n == 1):
+        if (n == 0):
             return None
         
-        return self.q[int(math.floor(n/2))];
+        return math.floor(n/2);
 
     # Return the queue (self.q) index of the left child node
     def young_child(self, n):
@@ -43,20 +46,38 @@ class PriorityQueue:
                     print(' ', end="")
 
             print(self.q[i], end=" ")
+        print("\nelements:", self.n)
+
+    # Given the index for the array, bubble up that element satisfying min_heap
+    # dominance
+    def min_heap_bubble_up(self, i):
+        print("bubbling up ", self.q[i])
+        p = self.parent(i)
+        print("p = ", p)
+        if p is None:
+            print("No parent, bubble up done")
+            return 0
+
+        if self.q[i] < self.q[p]:
+            self.swap(i, p)
+            self.min_heap_bubble_up(p)
 
     # Heap Construction - bubble up on insert
     def insert(self, x):
-        print(self.q)
-        #if (x > self.q[self.n])
+        # Insert this new node first at the last empty slot in array
+        self.q[self.n] = x
 
-p = PriorityQueue(11)
-p.q[0] = 5
-p.q[1] = 3
-p.q[2] = 8
-p.q[3] = 1
-p.q[4] = 2
-p.q[5] = 6
-p.q[6] = 9
-p.q[7] = 4
-p.q[8] = 7
+        # Bubble up this new element
+        self.min_heap_bubble_up(self.n)
+
+        # Increase number of elements of our priority queue by 1
+        self.n = self.n + 1
+
+        print("element", x, "inserted here is new tree:")
+        self.print_tree()
+
+size = 100
+p = PriorityQueue(size)
+for i in range(0, size):
+    p.insert(random.randint(1, 1000))
 p.print_tree()
